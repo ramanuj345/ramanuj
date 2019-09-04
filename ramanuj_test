@@ -1,0 +1,49 @@
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+#import pyautogui
+import time
+from asserts import assert_true, assert_equal, assert_raises
+import sys
+import os
+
+#Variable
+URL = "https://discovery.com/"
+URL1 = "https://go.discovery.com/"
+URL2 = "https://www.discovery.com/my-videos"
+
+#Lunch discovery.com with firefox  
+driver = webdriver.Firefox(executable_path=r'C:\WebDriver\geckodriver.exe')
+time.sleep(3)
+driver.get(URL)
+
+#click on discovery go link to add videos from recomended video for you
+driver.find_element_by_class_name("o-Header__m-ButtonLink").click()
+time.sleep(3)
+driver.execute_script("window.scrollTo(0,3200)")
+time.sleep(3)
+driver.find_element_by_xpath("(//i[contains(@class,'flipIconCore__icon icon-plus ')])[51]").click()
+time.sleep(3)
+driver.find_element_by_xpath("(//i[contains(@class,'flipIconCore__icon icon-plus ')])[52]").click()
+time.sleep(2)
+
+#added video to verify  
+driver.get(URL2)
+driver.execute_script("window.scrollTo(3200,500)")
+time.sleep(2)
+
+#check video1 is present or not 
+element = driver.find_element_by_tag_name("h2").text
+my_var = driver.find_element_by_tag_name("h2").text
+if (element==my_var):
+    print ' "Shark Week" video present'
+else:
+    print ' "Shark Week" video present not present'
+
+#check video2 is present or not
+element1 = driver.find_element_by_tag_name("h3").text
+my_var1 = driver.find_element_by_tag_name("h3").text
+if (element1==my_var1):
+    print ' "Expedition Unknown" video present'
+else:
+    print ' "Expedition Unknown" video present'	
